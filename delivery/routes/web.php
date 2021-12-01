@@ -25,6 +25,8 @@ Route::view("/login", "pages.login")->name("log in");
 
 Route::view("/register", "pages.register")->name("register");
 
+Route::post("/registerUser", "AuthController@registerUser")->name("registerUser");
+
 Route::get('/', function () {
     return view('pages.home');
 });

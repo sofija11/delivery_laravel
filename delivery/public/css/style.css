@@ -3350,7 +3350,7 @@ footer .bottom-footer .find-us .social-links-text li a:hover {
     padding: 0 15px;
   }
 }
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 900px) {
   header nav, .oth-lnks {
     display: none;
   }
