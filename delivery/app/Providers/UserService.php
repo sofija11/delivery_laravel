@@ -4,14 +4,15 @@ namespace App\Providers;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Dotenv\Exception\ValidationException;
 
 class UserService {
 
     private static $role_keys = [
-        1 => 'admin',
-        2  => 'korisnik',
-        3 => 'dostavljac',
+        'admin'         => 1,
+        'korisnik'      => 2,
+        'dostavljac'    => 3,
     ];
 
     public static function registerUser(
@@ -77,14 +78,47 @@ class UserService {
 
     }
 
-      
+    public static function loginUser(
+        string $usernameOrPassword,
+        string $password
+    ){
+        $md5Password = md5($password);
+        $user =  User::where('username', '=', $usernameOrPassword)
+        ->orWhere('email', '=', $usernameOrPassword)
+        ->where('password', '=', $md5Password)
+        ->first();
+        if($user !== null) {
+         
+            if($user->role_id === self::getRoleid('admin')){
+                return [
+                    'type' => 'admin',
+                    'user' => $user,
+                ];
+            } else if($user->role_id === self::getRoleid('korisnik')) {
+                return [
+                    'type' => 'korisnik',
+                    'user' => $user,
+                ];
+            } else {
+                return [
+                    'type' => 'deliverer',
+                    'user' => $user,
+                ];           
+            }
+        }
+        else {
+            var_dump('nema');
+        }
+        
+    }
+
     /**
      * vraca id uloge
      *
      * @param  string $role
      * @return int
      */    
-    public static function getRoleid(string $role): int {
+    public static function getRoleid(string $role):int {
         return self::$role_keys[$role];
     }
 

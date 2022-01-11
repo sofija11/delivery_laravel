@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("/home", "HomeController@index")->name("home");
+Route::get("/admin", "HomeController@admin")->name("admin");
+Route::get("/deliverer", "HomeController@deliverer")->name("deliverer");
 
 Route::get("/about", "AboutController@index")->name("about us");
 
@@ -25,7 +27,13 @@ Route::view("/login", "pages.login")->name("log in");
 
 Route::view("/register", "pages.register")->name("register");
 
+Route::view("/forgotPassword", "pages.forgotPassword")->name("forgotPassword");
+
+Route::post("/recoverPassword", "AuthController@recoverPassword")->name("recoverPassword");
+
 Route::post("/registerUser", "AuthController@registerUser")->name("registerUser");
+
+Route::post("/loginUser", "AuthController@loginUser")->name("loginUser");
 
 Route::get('/', function () {
     return view('pages.home');

@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('role_id')->index('users_role_id_foreign');
             $table->string('email', 255)->unique();
             $table->string('password', 255);
-            $table->string('mobile_phone')->nullable();
+            $table->string('mobile_phone');
             $table->unsignedTinyInteger('status')->default(0);
          
         });
